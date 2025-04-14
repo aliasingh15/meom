@@ -1,0 +1,32 @@
+# Linear Regression: Predicting Weight from Height
+#decision tree
+#prac6A
+
+
+import pandas as pd 
+from sklearn.linear_model import LinearRegression 
+import matplotlib.pyplot as plt 
+# Dataset 
+height = [151, 174, 138, 186, 128, 136, 179, 163, 152] 
+weight = [63, 81, 56, 91, 47, 57, 76, 72, 62] 
+# Create DataFrame 
+df = pd.DataFrame({'Height': height, 'Weight': weight}) 
+# Reshape height for model 
+X = df[['Height']]  # Feature 
+y = df['Weight']    # Target 
+# Linear Regression model 
+model = LinearRegression() 
+model.fit(X, y) 
+# Predict 
+df['Predicted_Weight'] = model.predict(X) 
+# Print results 
+print("Intercept:", model.intercept_) 
+print("Coefficient:", model.coef_) 
+# Plot 
+plt.scatter(df['Height'], df['Weight'], color='blue', label='Actual') 
+plt.plot(df['Height'], df['Predicted_Weight'], color='red', label='Predicted') 
+plt.xlabel("Height") 
+plt.ylabel("Weight") 
+plt.title("Linear Regression: Height vs Weight") 
+plt.legend() 
+plt.show()
