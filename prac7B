@@ -1,0 +1,38 @@
+#create pivot table
+#prac7B
+
+
+import pandas as pd 
+ 
+# Step 1: Create the dataset as a DataFrame 
+data = { 
+    'Date': ['03-Jan-20', '14-Jan-20', '21-Jan-20', '30-Jan-20', '07-Feb-20', 
+             '13-Feb-20', '22-Feb-20', '01-Mar-20', '13-Mar-20', '23-Mar-20'], 
+    'Color': ['Red', 'Blue', 'Green', 'Blue', 'Green', 
+              'Red', 'Blue', 'Green', 'Blue', 'Blue'], 
+    'Region': ['West', 'South', 'West', 'North', 'North', 
+               'South', 'East', 'West', 'East', 'North'], 
+    'Units': [1, 8, 2, 7, 8, 2, 5, 2, 8, 7], 
+    'Sales': [110000, 96000, 26000, 84000, 25000, 60000, 35000, 87000, 69000, 
+54000] 
+} 
+ 
+df = pd.DataFrame(data) 
+df['Date'] = pd.to_datetime(df['Date'], format='%d-%b-%y') 
+ 
+# Step 2: Total Sales 
+total_sales = df['Sales'].sum() 
+print("Total Sales:", total_sales) 
+ 
+# Step 3: Sum of Sales Color-wise 
+sales_by_color = df.groupby('Color')['Sales'].sum() 
+print("\nSum of Sales by Color:") 
+print(sales_by_color) 
+ 
+# Step 4: Sum of Units 
+total_units = df['Units'].sum() 
+print("\nTotal Units:", total_units) 
+# Step 5: Region-wise total sales and total units 
+region_summary = df.groupby('Region')[['Sales', 'Units']].sum() 
+print("\nRegion-wise Total Sales and Total Units:") 
+print(region_summary)
