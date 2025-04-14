@@ -1,0 +1,49 @@
+#Linear Regression....petal width on petal length
+#prac8A
+
+import numpy as np 
+import pandas as pd 
+from sklearn.linear_model import LinearRegression 
+from sklearn.model_selection import train_test_split 
+from sklearn.metrics import r2_score, mean_squared_error 
+import matplotlib.pyplot as plt 
+from sklearn.datasets import load_iris 
+import statsmodels.api as sm  # For detailed summary like R 
+# Step 1: Load Iris dataset 
+iris = load_iris() 
+df = pd.DataFrame(data=np.c_[iris['data'], iris['target']], 
+columns=iris['feature_names'] + ['target']) 
+# Step 2: Prepare features and target 
+X = df[['petal length (cm)']]  # Independent variable 
+y = df['petal width (cm)']     # Dependent variable 
+# Step 3: Add constant term for statsmodels (intercept) 
+X_sm = sm.add_constant(X) 
+# Step 4: Fit the model using statsmodels for detailed summary 
+model_sm = sm.OLS(y, X_sm).fit() 
+# Step 5: Print model summary (equivalent to R's summary()) 
+print("Model Summary:") 
+print(model_sm.summary()) 
+# Step 6: Fit sklearn model for predictions and evaluation 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, 
+random_state=42) 
+model_sk = LinearRegression() 
+model_sk.fit(X_train, y_train) 
+# Step 7: Make predictions 
+y_pred = model_sk.predict(X_test) 
+# Step 8: Evaluate model 
+r2 = r2_score(y_test, y_pred) 
+mse = mean_squared_error(y_test, y_pred) 
+print(f"\nSklearn Model Evaluation:") 
+print(f"R-squared Score: {r2:.4f}") 
+print(f"Mean Squared Error: {mse:.4f}") 
+print(f"Coefficient (Slope): {model_sk.coef_[0]:.4f}") 
+print(f"Intercept: {model_sk.intercept_:.4f}") 
+plt.scatter(df['petal length (cm)'], df['petal width (cm)'],  
+color='blue', label='Actual Data', marker='o') 
+plt.plot(df['petal length (cm)'], model_sk.predict(X),  
+color='red', label='Regression Line', linewidth=2) 
+plt.title("Linear Regression: Petal Width vs Petal Length") 
+plt.xlabel("Petal Length (cm)") 
+plt.ylabel("Petal Width (cm)") 
+plt.legend() 
+plt.show() 
