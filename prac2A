@@ -1,0 +1,20 @@
+#One sample T-Test
+#prac2A
+
+from scipy import stats 
+# Given data 
+student_scores = [72, 88, 64, 74, 67, 79, 85, 75, 89, 77] 
+# Hypothesized population mean 
+mu_0 = 70 
+# One-sample T-test 
+t_stat, p_value = stats.ttest_1samp(student_scores, mu_0) 
+print("T-statistic:", t_stat) 
+print("P-value:", p_value) 
+# Interpretation 
+alpha = 0.05 
+if p_value < alpha:
+    print("Conclusion: Reject the null hypothesis.")
+    print("The mean student score is significantly different from 70.")
+else:
+    print("Conclusion: Fail to reject the null hypothesis.")
+    print("There is no significant difference from the hypothesized mean of 70.")
