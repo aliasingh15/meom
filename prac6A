@@ -1,5 +1,4 @@
 # Linear Regression: Predicting Weight from Height
-#decision tree
 #prac6A
 
 
@@ -30,3 +29,30 @@ plt.ylabel("Weight")
 plt.title("Linear Regression: Height vs Weight") 
 plt.legend() 
 plt.show()
+
+
+
+#Decision Tree on Titanic Dataset 
+
+import seaborn as sns 
+from sklearn.tree import DecisionTreeClassifier, plot_tree 
+from sklearn.model_selection import train_test_split 
+# Load Titanic dataset 
+titanic = sns.load_dataset("titanic") 
+# Select features and target 
+features = titanic[['pclass', 'sex', 'age', 'fare']].dropna() 
+features['sex'] = features['sex'].map({'male': 0, 'female': 1}) 
+target = titanic.loc[features.index, 'survived'] 
+# Train/test split 
+X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, 
+random_state=42) 
+# Decision Tree model 
+dtree = DecisionTreeClassifier(max_depth=3) 
+dtree.fit(X_train, y_train) 
+# Plot the tree 
+plt.figure(figsize=(12, 8)) 
+plot_tree(dtree, feature_names=['pclass', 'sex', 'age', 'fare'], class_names=['Not Survived', 'Survived'], filled=True) 
+plt.title("Decision Tree on Titanic Dataset") 
+plt.show() 
+# Accuracy 
+print("Model Accuracy:", dtree.score(X_test, y_test))
