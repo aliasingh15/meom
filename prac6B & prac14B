@@ -1,0 +1,34 @@
+#CSV FILE...CARS...perform transformation
+#prac6B & #prac14B
+
+import pandas as pd 
+# Step 1: Create the DataFrame from the given data 
+data = { 
+'Make': ['Honda', 'Honda', 'Toyota', 'Nissan', 'Toyota', 'Honda', 'Ford', 'Chevrolet', 
+'Chevrolet', 'Dodge', 'Dodge'], 
+'Model': ['Accord', 'Accord', 'Camry', 'Altima', 'Corolla', 'Civic', 'F-150', 'Silverado', 
+'Impala', 'Charger', 'Charger'], 
+'Color': ['Red', 'Blue', 'Black', 'Green', 'Black', 'White', 'Black', 'Green', 'Silver', 
+'Silver', 'Silver'], 
+'Mileage': [63512, 95135, 75006, 69847, 87278, 138789, 89073, 109231, 87675, 
+34853, 58173], 
+'Sell Price': [4000, 2500, 45000, 3826, 2224, 2723, 3950, 4959, 3791, 4349, 4252], 
+'Buy Price': [3000, 2000, 44000, 3000, 2100, 1900, 3000, 4500, 3500, 3500, 4000] 
+} 
+df = pd.DataFrame(data) 
+# Step 2: Display records with Buy Price >= 3000 
+filtered_df = df[df['Buy Price'] >= 3000] 
+print("Cars with Buy Price >= 3000:") 
+print(filtered_df) 
+# Step 3: Sort the data in ascending order by 'Buy Price' 
+sorted_df = df.sort_values(by='Buy Price') 
+print("\nSorted Car Data by Buy Price:") 
+print(sorted_df) 
+# Step 4: Group the data according to the 'Model' of the car 
+grouped = df.groupby('Model').agg({ 
+'Mileage': 'mean', 
+'Sell Price': 'mean', 
+'Buy Price': 'mean' 
+}).reset_index() 
+print("\nGrouped Data by Model (Average Values):") 
+print(grouped)
