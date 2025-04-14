@@ -1,0 +1,22 @@
+# Two Sample t-test
+#prac4A
+
+import scipy.stats as stats 
+# Group-I: Experience (0-1 year) 
+group1 = [85, 95, 100, 80, 90, 97, 104, 95, 88, 92, 94, 99] 
+# Group-II: Experience (1-2 years) 
+group2 = [83, 85, 96, 92, 100, 104, 94, 95, 88, 90, 93, 94] 
+# Perform two-sample independent t-test 
+t_stat, p_value = stats.ttest_ind(group1, group2) 
+# Print results 
+print("T-statistic:", t_stat) 
+print("P-value:", p_value) 
+# Significance level 
+alpha = 0.05 
+# Interpret result 
+if p_value < alpha:
+    print("Conclusion: Reject the null hypothesis.")
+    print("There is a significant difference in task completion time between the groups.") 
+else:
+    print("Conclusion: Fail to reject the null hypothesis.")
+    print("There is no significant difference in task completion time between the groups.")
