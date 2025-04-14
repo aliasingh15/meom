@@ -1,0 +1,20 @@
+#what-if-analysis
+#prac8
+
+from scipy.optimize import fsolve 
+# Given grades for other semester work 
+grades = { 
+"Paper Presentation": 58, 
+"Case Study": 70, 
+"Assignment": 72, 
+"Practical": 60 
+} 
+# Function to find the final exam score that makes the average = 72 
+def target(final_exam_score):
+    total = sum(grades.values()) + final_exam_score
+    avg = total / 5
+    return avg - 72  # We want this to be zero 
+# Use fsolve to find the root (final_exam_score) 
+from scipy.optimize import fsolve 
+required_score = fsolve(target, 60)[0] 
+print(f" Required Final Exam Score to get an average of 72: {required_score:.2f}") 
