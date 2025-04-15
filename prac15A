@@ -1,0 +1,19 @@
+# two simple t-test
+
+
+from scipy.stats import ttest_ind 
+# Task times for Group 1 (0-1 year experience) 
+group1 = [85, 95, 100, 80, 90, 97, 104, 95, 88, 92, 94, 99] 
+# Task times for Group 2 (1-2 years experience) 
+group2 = [83, 85, 96, 92, 100, 104, 94, 95, 88, 90, 93, 94] 
+# Perform two-sample independent t-test 
+t_stat, p_value = ttest_ind(group1, group2) 
+# Print results 
+print(f"T-statistic: {t_stat:.4f}") 
+print(f"P-value: {p_value:.4f}") 
+# Interpretation 
+alpha = 0.05 
+if p_value < alpha:
+    print("Reject the Null Hypothesis: Significant difference between the groups.") 
+else:
+    print("Fail to Reject the Null Hypothesis: No significant difference between the groups.") 
