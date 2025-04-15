@@ -1,0 +1,43 @@
+import numpy as np 
+#linear regression ....VLOOKUP
+
+import pandas as pd 
+from sklearn.linear_model import LinearRegression 
+from sklearn.model_selection import train_test_split 
+from sklearn.metrics import r2_score, mean_squared_error 
+import matplotlib.pyplot as plt 
+from sklearn.datasets import load_iris 
+# Step 1: Load the Iris dataset 
+iris = load_iris() 
+df = pd.DataFrame(data=np.c_[iris['data'], iris['target']], 
+columns=iris['feature_names'] + ['target']) 
+# Step 2: Prepare features and target 
+X = df[['petal length (cm)']]  # Independent variable 
+y = df['petal width (cm)']     # Dependent variable 
+# Step 3: Split data into training and testing sets 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, 
+random_state=42) 
+# Step 4: Train Linear Regression model 
+model = LinearRegression() 
+model.fit(X_train, y_train) 
+# Step 5: Make predictions 
+y_pred = model.predict(X_test) 
+# Step 6: Evaluate model 
+r2 = r2_score(y_test, y_pred) 
+mse = mean_squared_error(y_test, y_pred) 
+print(f"R-squared Score: {r2:.4f}") 
+print(f"Mean Squared Error: {mse:.4f}") 
+print(f"Coefficient (Slope): {model.coef_[0]:.4f}") 
+print(f"Intercept: {model.intercept_:.4f}") 
+# Step 7: Predict petal width for a new petal length (e.g., 5 cm) 
+new_length = np.array([[5.0]]) 
+predicted_width = model.predict(new_length) 
+print(f"Predicted Petal Width for Petal Length 5.0 cm: {predicted_width[0]:.2f} cm") 
+# Step 8: Visualize the regression line 
+plt.scatter(X, y, color='blue', label='Actual Data') 
+plt.plot(X, model.predict(X), color='red', label='Regression Line') 
+plt.xlabel('Petal Length (cm)') 
+plt.ylabel('Petal Width (cm)') 
+plt.title('Linear Regression: Petal Width vs Petal Length') 
+plt.legend() 
+plt.show()
