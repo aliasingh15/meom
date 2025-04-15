@@ -1,0 +1,59 @@
+#Decision Tree Model on Titanic Dataset
+#prac14A
+
+import pandas as pd 
+from sklearn.model_selection import train_test_split 
+from sklearn.tree import DecisionTreeClassifier, plot_tree, export_text 
+import matplotlib.pyplot as plt 
+# Load Titanic dataset from seaborn (or from CSV if needed) 
+import seaborn as sns 
+titanic = sns.load_dataset('titanic') 
+# Select useful features and drop missing values 
+df = titanic[['pclass', 'sex', 'age', 'fare', 'embarked', 'survived']].dropna() 
+# Encode categorical variables 
+df['sex'] = df['sex'].map({'male': 0, 'female': 1}) 
+df['embarked'] = df['embarked'].map({'S': 0, 'C': 1, 'Q': 2}) 
+# Split data 
+X = df.drop('survived', axis=1) 
+y = df['survived'] 
+# Train model 
+clf = DecisionTreeClassifier(max_depth=4, criterion='entropy', random_state=0) 
+clf.fit(X, y) 
+# Plot tree 
+plt.figure(figsize=(15, 10)) 
+plot_tree(clf, feature_names=X.columns, class_names=['Not Survived', 'Survived'], 
+filled=True) 
+plt.title("Titanic Decision Tree") 
+plt.show() 
+# Print decision rules 
+print("\nDecision Tree Rules:") 
+print(export_text(clf, feature_names=list(X.columns)))
+
+
+
+#2: Linear Regression on Height vs Weight
+
+
+import numpy as np 
+from sklearn.linear_model import LinearRegression 
+import matplotlib.pyplot as plt 
+# Given height and weight data 
+height = np.array([151, 174, 138, 186, 128, 136, 179, 163, 152]).reshape(-1, 1) 
+weight = np.array([63, 81, 56, 91, 47, 57, 76, 72, 62]) 
+# Train linear regression model 
+model = LinearRegression() 
+model.fit(height, weight) 
+# Predict 
+predicted_weight = model.predict(height) 
+# Plotting 
+plt.scatter(height, weight, color='blue', label='Actual') 
+plt.plot(height, predicted_weight, color='red', label='Regression Line') 
+plt.xlabel("Height (cm)") 
+plt.ylabel("Weight (kg)") 
+plt.title("Linear Regression - Height vs Weight") 
+plt.legend() 
+plt.grid(True) 
+plt.show() 
+# Print model coefficients 
+print(f"Intercept: {model.intercept_:.2f}") 
+print(f"Slope: {model.coef_[0]:.2f}") 
