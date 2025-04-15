@@ -1,0 +1,39 @@
+#multiple linear regression...pima indian diabetes dataset
+
+
+import pandas as pd 
+import seaborn as sns 
+import matplotlib.pyplot as plt 
+from sklearn.linear_model import LinearRegression 
+from sklearn.metrics import mean_squared_error, r2_score 
+from sklearn.model_selection import train_test_split 
+# Load the dataset (you can download it from Kaggle or UCI) 
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians diabetes.data.csv" 
+column_names = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 
+'BMI', 'DiabetesPedigreeFunction', 'Age', 'Outcome'] 
+df = pd.read_csv(url, names=column_names) 
+# Features (excluding Glucose and Outcome) 
+X = df.drop(['Glucose', 'Outcome'], axis=1) 
+# Target: Predicting Glucose level 
+y = df['Glucose'] 
+# Split dataset into train and test 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, 
+random_state=42) 
+# Fit Multiple Linear Regression model 
+model = LinearRegression() 
+model.fit(X_train, y_train) 
+# Predict 
+y_pred = model.predict(X_test) 
+# Evaluation metrics 
+mse = mean_squared_error(y_test, y_pred) 
+r2 = r2_score(y_test, y_pred) 
+print("Mean Squared Error (MSE):", mse) 
+print("R-squared (R²):", r2) 
+# Optional: Plot predicted vs actual 
+plt.figure(figsize=(8,5)) 
+sns.scatterplot(x=y_test, y=y_pred) 
+plt.xlabel("Actual Glucose") 
+plt.ylabel("Predicted Glucose") 
+plt.title("Actual vs Predicted Glucose Levels") 
+plt.grid(True) 
+plt.show()
