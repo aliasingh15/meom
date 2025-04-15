@@ -1,0 +1,47 @@
+#principle component analysis(pca)....visualize the data
+#prac11B
+
+
+import pandas as pd 
+import matplotlib.pyplot as plt 
+import seaborn as sns 
+from sklearn.datasets import load_iris 
+from sklearn.preprocessing import StandardScaler 
+from sklearn.decomposition import PCA 
+# Step 1: Load the Iris dataset 
+iris = load_iris() 
+X = iris.data 
+y = iris.target 
+feature_names = iris.feature_names 
+target_names = iris.target_names 
+# Step 2: Standardize the features 
+scaler = StandardScaler() 
+X_scaled = scaler.fit_transform(X) 
+# Step 3: Apply PCA 
+pca = PCA() 
+X_pca = pca.fit_transform(X_scaled) 
+# Step 4: Explained variance ratio 
+explained_variance = pca.explained_variance_ratio_ 
+print("Explained variance ratio:", explained_variance) 
+# Step 5: Scree plot to choose number of components 
+plt.figure(figsize=(8, 5)) 
+plt.plot(range(1, len(explained_variance) + 1), explained_variance, 'o-', color='green') 
+plt.title('Scree Plot') 
+plt.xlabel('Principal Component') 
+plt.ylabel('Variance Explained') 
+plt.grid(True) 
+plt.show() 
+# Step 6: Use top 2 components for visualization 
+pca_2 = PCA(n_components=2) 
+X_reduced = pca_2.fit_transform(X_scaled) 
+# Step 7: Visualize the 2D PCA result 
+df_pca = pd.DataFrame(X_reduced, columns=['PC1', 'PC2']) 
+df_pca['Target'] = y 
+plt.figure(figsize=(8, 6)) 
+sns.scatterplot(data=df_pca, x='PC1', y='PC2', hue='Target', palette='Set1', s=80) 
+plt.title('PCA - Iris Dataset (2D)') 
+plt.xlabel('Principal Component 1') 
+plt.ylabel('Principal Component 2') 
+plt.legend(labels=target_names) 
+plt.grid(True) 
+plt.show()
